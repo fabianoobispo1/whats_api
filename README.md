@@ -1,3 +1,9 @@
+<!-- 
+docker build -t fbc623/whatsapp-api:latest .
+docker push fbc623/whatsapp-api:latest
+ -->
+
+
 # WhatsApp REST API
 
 REST API wrapper for the [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js) library, providing an easy-to-use interface to interact with the WhatsApp Web platform. 

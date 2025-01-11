@@ -12,6 +12,7 @@ const chatController = require('./controllers/chatController')
 const groupChatController = require('./controllers/groupChatController')
 const messageController = require('./controllers/messageController')
 const contactController = require('./controllers/contactController')
+const apiKeyController = require('./controllers/apiKeyController')
 
 /**
  * ================
@@ -21,6 +22,11 @@ const contactController = require('./controllers/contactController')
 
 // API endpoint to check if server is alive
 routes.get('/ping', healthController.ping)
+
+// registro de  apikey
+routes.post('/apikey/listar', apiKeyController.listApiKeys)
+routes.post('/apikey/registrar', apiKeyController.createApiKey)
+
 // API basic callback
 if (enableLocalCallbackExample) {
   routes.post('/localCallbackExample', [middleware.apikey, middleware.rateLimiter], healthController.localCallbackExample)
@@ -34,8 +40,8 @@ if (enableLocalCallbackExample) {
 const sessionRouter = express.Router()
 sessionRouter.use(middleware.apikey)
 sessionRouter.use(middleware.sessionSwagger)
-routes.use('/session', sessionRouter)
 
+routes.use('/session', sessionRouter)
 sessionRouter.get('/start/:sessionId', middleware.sessionNameValidation, sessionController.startSession)
 sessionRouter.get('/status/:sessionId', middleware.sessionNameValidation, sessionController.statusSession)
 sessionRouter.get('/qr/:sessionId', middleware.sessionNameValidation, sessionController.sessionQrCode)
@@ -178,6 +184,7 @@ contactRouter.post('/unblock/:sessionId', [middleware.sessionNameValidation, mid
 contactRouter.post('/getFormattedNumber/:sessionId', [middleware.sessionNameValidation, middleware.sessionValidation], contactController.getFormattedNumber)
 contactRouter.post('/getCountryCode/:sessionId', [middleware.sessionNameValidation, middleware.sessionValidation], contactController.getCountryCode)
 contactRouter.post('/getProfilePicUrl/:sessionId', [middleware.sessionNameValidation, middleware.sessionValidation], contactController.getProfilePicUrl)
+
 /**
  * ================
  * SWAGGER ENDPOINTS
