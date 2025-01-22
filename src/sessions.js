@@ -7,6 +7,9 @@ const { triggerWebhook, waitForNestedObject, checkIfEventisEnabled } = require('
 
 // Function to validate if the session is ready
 const validateSession = async (sessionId) => {
+  if (!sessions.has(sessionId)) {
+    return { success: false, message: 'session_not_found' }
+  }
   try {
     const returnData = { success: false, state: null, message: '' }
 
