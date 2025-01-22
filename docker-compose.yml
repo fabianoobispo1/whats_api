@@ -7,12 +7,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - API_KEY=fabianotoken
+      - API_KEY=682835de-3ca7-4ff5-8996-8f2b8b8d4a44
       - BASE_WEBHOOK_URL=https://apiwhatsapp.fabianoobispo.com.br/localCallbackExample
       - MAX_ATTACHMENT_SIZE=5000000 # IN BYTES
       - SET_MESSAGES_AS_SEEN=TRUE # WILL MARK THE MESSAGES AS READ AUTOMATICALLY
       - DISABLED_CALLBACKS=message_ack|message_reaction  # PREVENT SENDING CERTAIN TYPES OF CALLBACKS BACK TO THE WEBHOOK
       - ENABLE_SWAGGER_ENDPOINT=TRUE # OPTIONAL, ENABLES THE /api-docs ENDPOINT
-      - DATABASE_URL='postgresql://fbc623:88281783Fbc@postgres:5432/apiwhatsapp?schema=public'
+      - DATABASE_URL='postgresql://myapp:cbad76e0e4b6dac53aeb2c6a1585adbf@173.249.23.247:5432/mydb?schema=public'
     volumes:
       - ./sessions:/usr/src/app/sessions # Mount the local ./sessions/ folder to the container's /usr/src/app/sessions folder

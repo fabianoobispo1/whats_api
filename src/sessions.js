@@ -7,9 +7,6 @@ const { triggerWebhook, waitForNestedObject, checkIfEventisEnabled } = require('
 
 // Function to validate if the session is ready
 const validateSession = async (sessionId) => {
-  if (!sessions.has(sessionId)) {
-    return { success: false, message: 'session_not_found' }
-  }
   try {
     const returnData = { success: false, state: null, message: '' }
 
@@ -102,17 +99,7 @@ const setupSession = (sessionId) => {
       puppeteer: {
         executablePath: process.env.CHROME_BIN || null,
         // headless: false,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--disable-software-rasterizer',
-          '--disable-extensions',
-          '--no-zygote',
-          '--single-process',
-          '--ignore-certificate-errors'
-        ]
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
       },
       userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36',
       authStrategy: localAuth

@@ -1,6 +1,5 @@
 const app = require('./src/app')
 const { baseWebhookURL } = require('./src/config')
-const { responseHandler } = require('./src/middleware')
 require('dotenv').config()
 
 // Start the server
@@ -15,4 +14,3 @@ if (!baseWebhookURL) {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
-app.use(responseHandler)

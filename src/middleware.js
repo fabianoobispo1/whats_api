@@ -173,16 +173,6 @@ const groupChatSwagger = async (req, res, next) => {
   next()
 }
 
-const responseHandler = (req, res, next) => {
-  const originalSend = res.send
-  res.send = function (...args) {
-    if (!res.headersSent) {
-      originalSend.apply(res, args)
-    }
-  }
-  next()
-}
-
 module.exports = {
   sessionValidation,
   apikey,
@@ -193,6 +183,5 @@ module.exports = {
   messageSwagger,
   chatSwagger,
   groupChatSwagger,
-  rateLimiter,
-  responseHandler
+  rateLimiter
 }
