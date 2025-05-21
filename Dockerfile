@@ -19,11 +19,14 @@ RUN set -x \
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install the dependencies
-RUN npm ci --only=production --ignore-scripts
+# Install the dependencies (removendo a flag --ignore-scripts)
+RUN npm ci --only=production
 
 # Copy the rest of the source code to the working directory
 COPY . .
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 # Expose the port the API will run on
 EXPOSE 3000

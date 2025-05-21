@@ -1,31 +1,32 @@
-const { rateLimitMax, rateLimitWindowMs } = require('./config')
+const { globalApiKey, rateLimitMax, rateLimitWindowMs } = require('./config')
 const { sendErrorResponse } = require('./utils')
 const { validateSession } = require('./sessions')
 const rateLimiting = require('express-rate-limit')
 
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-
 const apikey = async (req, res, next) => {
-  const apiKey = req.headers['x-api-key']
-
-  if (!apiKey) {
-    return sendErrorResponse(res, 403, 'API key is required')
-  }
-
-  const validKey = await prisma.apiKey.findFirst({
-    where: {
-      key: apiKey,
-      active: true
+  /*
+    #swagger.security = [{
+          "apiKeyAuth": []
+    }]
+  */
+  /* #swagger.responses[403] = {
+        description: "Forbidden.",
+        content: {
+          "application/json": {
+            schema: { "$ref": "#/definitions/ForbiddenResponse" }
+          }
+        }
+      }
+  */
+  if (globalApiKey) {
+    const apiKey = req.headers['x-api-key']
+    if (!apiKey || apiKey !== globalApiKey) {
+      return sendErrorResponse(res, 403, 'Invalid API key')
     }
-  })
-
-  if (!validKey) {
-    return sendErrorResponse(res, 403, 'Invalid API key')
   }
-
   next()
 }
+
 const sessionNameValidation = async (req, res, next) => {
   /*
     #swagger.parameters['sessionId'] = {
